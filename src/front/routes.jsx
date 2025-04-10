@@ -1,30 +1,62 @@
-// Import necessary components and functions from react-router-dom.
+/* 👆 🤟🏼 ❇️ Riki for the group success 9_Abril 👊 */
 
 import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Navigate
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
-import { Single } from "./pages/Single";
-import { Demo } from "./pages/Demo";
+import PublicLayout from "./pages/PublicLayout";
+import { Login } from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
+import Dash_user from "./pages/Dash_user/Dash_user";
+import Dash_admin from "./pages/Dash_admin/Dash_admin";
+import Plot_form from "./pages/Plot_form/Plot_form";
+import Landing from "./pages/Landing/Landing";
+import Contact from "./pages/Contact/Contact";
+
+// Componente para proteger rutas privadas
+const ProtectedRoute = ({ children }) => {
+  // Verifica si el usuario está autenticado
+  const isAuthenticated = localStorage.getItem("token");
+  
+  if (!isAuthenticated) {
+    // Redirige al login si no está autenticado
+    return <Navigate to="/login" replace />;
+  }
+  
+  return children;
+};
 
 export const router = createBrowserRouter(
-    createRoutesFromElements(
-    // CreateRoutesFromElements function allows you to build route elements declaratively.
-    // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
-    // Root, on the contrary, create a sister Route, if you have doubts, try it!
-    // Note: keep in mind that errorElement will be the default page when you don't get a route, customize that page to make your project more attractive.
-    // Note: The child paths of the Layout element replace the Outlet component with the elements contained in the "element" attribute of these child paths.
-
-      // Root Route: All navigation will start from here.
-      <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
-
-        {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<Home />} />
-        <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-        <Route path="/demo" element={<Demo />} />
+  createRoutesFromElements(
+    <>
+      {/* Rutas públicas con PublicLayout */}
+      <Route path="/" element={<PublicLayout />} errorElement={<h1>Not found!</h1>}>
+        <Route index element={<Landing />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="contacto" element={<Contact />} />
       </Route>
-    )
+      
+      {/* Rutas privadas con Layout y protección */}
+      <Route 
+        path="/app" 
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        } 
+        errorElement={<h1>Not found!</h1>}
+      >
+        <Route path ="dashboard" element={<Dash_user />} />
+        <Route path="dash_admin" element={<Dash_admin />} />
+        <Route path="plot_form" element={<Plot_form />} />
+      </Route>
+      
+      {/* Ruta para redireccionar URLs no encontradas */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </>
+  )
 );
