@@ -11,13 +11,13 @@ export const MainNavbar = () => {
 		<>
 			<div className="topbar bg-light border-bottom py-1">
 				<Container fluid className="topbar-container d-flex justify-content-end align-items-center small">
-					<a href="tel:+34600111222" className="contact-link d-flex align-items-center me-4">
+					<a href="tel:+34614483128" className="contact-link d-flex align-items-center me-4">
 						<FaPhoneAlt className="me-1" />
-						<span>600 111 222</span>
+						<span>614483128</span>
 					</a>
 					<a href="mailto:info@electrotel.com" className="contact-link d-flex align-items-center me-4">
 						<FaEnvelope className="me-1" />
-						<span>info@electrotel.com</span>
+						<span>instalacioneselectrotel@gmail.com</span>
 					</a>
 				</Container>
 			</div>
@@ -31,9 +31,7 @@ export const MainNavbar = () => {
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
 							<Nav.Link href="#home" className="nav-link-custom">Home</Nav.Link>
-							<Nav.Link href="#link" className="nav-link-custom">Servicios</Nav.Link>
-							<Nav.Link href="#link" className="nav-link-custom">Proyectos</Nav.Link>
-							<Nav.Link href="#link" className="nav-link-custom">Contacto</Nav.Link>
+							<Nav.Link href="#link" className="nav-link-custom">Presupuesto Online</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
