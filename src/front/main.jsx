@@ -18,7 +18,7 @@ const Main = () => {
 
     return (
         <React.StrictMode>
-            <HelmetProvider> {/* ✅ Envuelve la app con HelmetProvider */}
+            <HelmetProvider> {/* Envuelve la app con HelmetProvider para los metadatos */}
                 <StoreProvider>
                     <RouterProvider router={router} />
                 </StoreProvider>

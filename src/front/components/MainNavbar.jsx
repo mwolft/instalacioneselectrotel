@@ -13,9 +13,9 @@ export const MainNavbar = () => {
 				<Container fluid className="topbar-container d-flex justify-content-end align-items-center small">
 					<a href="tel:+34614483128" className="contact-link d-flex align-items-center me-4">
 						<FaPhoneAlt className="me-1" />
-						<span>614483128</span>
+						<span>614 48 31 28</span>
 					</a>
-					<a href="mailto:info@electrotel.com" className="contact-link d-flex align-items-center me-4">
+					<a href="mailto:instalacioneselectrotel@gmail.com<" className="contact-link d-flex align-items-center me-4">
 						<FaEnvelope className="me-1" />
 						<span>instalacioneselectrotel@gmail.com</span>
 					</a>
@@ -24,14 +24,14 @@ export const MainNavbar = () => {
 
 			<Navbar expand="lg" className="bg-body-tertiary">
 				<Container fluid>
-					<Navbar.Brand href="#home">
+					<Navbar.Brand href="/">
 						<img src={logo} alt="electricista cerca de ti" className="navbar-logo" />
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
-							<Nav.Link href="#home" className="nav-link-custom">Home</Nav.Link>
-							<Nav.Link href="#link" className="nav-link-custom">Presupuesto Online</Nav.Link>
+							<Nav.Link href="/" className="nav-link-custom">Home</Nav.Link>
+							<Nav.Link href="#link" className="nav-link-custom">Contácto</Nav.Link>
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
