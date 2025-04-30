@@ -1,37 +1,32 @@
 import { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import instalacionElectrica from "../assets/img/instalacion-electrica.png";
-import cuadroElectrico from "../assets/img/cuadro-electrico.png";
-import domotica from "../assets/img/domotica.png";
-import videoportero from "../assets/img/videoportero.png";
-import vehiculoElectrico from "../assets/img/punto-de-carga-para-vehiculos-electrico.png";
 
 const servicios = [
   {
     titulo: "Instalaciones y Renovaciones Eléctricas",
     descripcion: "Obras en viviendas, locales comerciales y comunidades (nuevas acometidas, reformas integrales y actualizaciones).",
-    imagen: instalacionElectrica,
+    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979040/instalacion-electrica_gtisl4.avif",
   },
   {
     titulo: "Cuadros, Boletines y Certificaciones",
     descripcion: "Cambio o renovación de cuadros eléctricos, emisión de boletines y certificados oficiales para legalización.",
-    imagen: cuadroElectrico,
+    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979040/instalaciones-electricas_ryeecl.avif",
   },
   {
     titulo: "Iluminación y Domótica",
     descripcion: "Proyectos LED de interior y exterior, así como sistemas inteligentes de automatización del hogar.",
-    imagen: domotica,
+    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979040/domotica_vwvugf.avif",
   },
   {
     titulo: "Control de Acceso y Seguridad",
     descripcion: "Instalación de porteros automáticos, videoporteros y soluciones integrales de accesos.",
-    imagen: videoportero,
+    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979041/videoportero_oeamz4.avif",
   },
   {
     titulo: "Movilidad Eléctrica y Servicios para Comunidades",
     descripcion: "Puntos de carga para vehículos eléctricos y mantenimiento eléctrico especializado para comunidades de vecinos.",
-    imagen: vehiculoElectrico,
+    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979041/punto-de-carga-para-vehiculos-electrico_zay53o.avif",
   },
 ];
 
@@ -67,7 +62,7 @@ const ServicioBlock = ({ servicio, index }) => {
 export const Servicios = () => {
   return (
     <section className="servicios-section">
-      <h1>Soluciones Eléctricas Profesionales en Cádiz</h1>
+      <h1>Soluciones Eléctricas Profesionales en el Puerto de Santa María, Cádiz</h1>
       {servicios.map((servicio, i) => (
         <ServicioBlock key={i} servicio={servicio} index={i} />
       ))}

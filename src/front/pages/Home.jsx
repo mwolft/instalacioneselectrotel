@@ -34,20 +34,20 @@ export const Home = () => {
 		<>
 			<Helmet>
 				<title>Electrotel | Instalaciones Eléctricas Profesionales</title>
-				<meta name="description" content="Instaladores eléctricos autorizados en Ciudad Real. Pide presupuesto online sin registro para tu vivienda, local o comunidad." />
-				<meta property="og:title" content="Electrotel | Instalaciones Eléctricas Profesionales" />
-				<meta property="og:description" content="Servicios eléctricos, boletines, domótica, cargadores eléctricos y más. Presupuesto online sin registro." />
-				<meta property="og:image" content="https://www.tudominio.com/img/banner-og.jpg" />
+				<meta name="description" content="Instaladores eléctricos autorizados en el Puerto de Santa María, Cádiz. Pide presupuesto online ahora." />
+				<meta property="og:title" content="Electrotel | Instalaciones Eléctricas" />
+				<meta property="og:description" content="Servicios eléctricos, boletines, domótica, cargadores eléctricos y más. Presupuesto online." />
+				<meta property="og:image" content="https://res.cloudinary.com/dewanllxn/image/upload/v1745981667/electricista_en_el_Puerto_de_Santa_Maria_vf9lb6.jpg" />
 				<meta property="og:type" content="website" />
-				<meta property="og:url" content="https://www.tudominio.com/" />
+				<meta property="og:url" content="https://instalacioneselectrotel.es" />
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta name="twitter:title" content="Electrotel | Instalaciones Eléctricas Profesionales" />
-				<meta name="twitter:description" content="Presupuestos eléctricos online en Ciudad Real sin registro." />
-				<meta name="twitter:image" content="https://www.tudominio.com/img/banner-og.jpg" />
+				<meta name="twitter:description" content="Presupuestos eléctricos online en el Puerto de Santa María, Cádiz." />
+				<meta name="twitter:image" content="https://res.cloudinary.com/dewanllxn/image/upload/v1745981667/electricista_en_el_Puerto_de_Santa_Maria_vf9lb6.jpg" />
 			</Helmet>
 
 			<div className="banner-container">
-				<img src={banner} alt="Electrotel instalaciones eléctricas" className="banner-img" />
+				<img src="https://res.cloudinary.com/dewanllxn/image/upload/v1745980159/banner_itvoxt.png" alt="Electrotel instalaciones eléctricas en el Puerto de Santa María, Cádiz" className="banner-img" />
 				<div className="banner-buttons">
 					<button className="banner-btn call-btn">
 						<FaPhoneAlt className="me-1" />
