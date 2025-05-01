@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Helmet } from "react-helmet-async";
 import banner from "../assets/img/banner.png";
@@ -9,7 +9,7 @@ import { ContactoHome } from "../components/ContactoHome.jsx"
 
 export const Home = () => {
 	const { store, dispatch } = useGlobalReducer();
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
 
 	const loadMessage = async () => {
 		try {
@@ -49,10 +49,10 @@ export const Home = () => {
 			<div className="banner-container">
 				<img src="https://res.cloudinary.com/dewanllxn/image/upload/v1745980159/banner_itvoxt.png" alt="Electrotel instalaciones eléctricas en el Puerto de Santa María, Cádiz" className="banner-img" />
 				<div className="banner-buttons">
-					<button className="banner-btn call-btn">
+					<a href="tel:+34614483128" className="banner-btn call-btn">
 						<FaPhoneAlt className="me-1" />
 						Llamar
-					</button>
+					</a>
 					<button className="banner-btn email-btn" onClick={() => navigate("/presupuesto")}>
 						<FaFileAlt className="me-1" />
 						Presupuesto Online

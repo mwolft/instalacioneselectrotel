@@ -32,7 +32,7 @@ export const ContactoHome = () => {
   };
 
   return (
-    <section className="contacto-home">
+    <section className="contacto-home" id="contacto">
       <h2>Contáctanos</h2>
       <form onSubmit={handleSubmit} className="contacto-form">
         <input name="nombre" type="text" placeholder="Tu nombre" value={form.nombre} onChange={handleChange} required />

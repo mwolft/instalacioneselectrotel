@@ -63,7 +63,7 @@ export const Presupuesto = () => {
 
     return (
         <div className="presupuesto-container">
-            <h1>Solicita tu presupuesto</h1>
+            <h1>Presupuesto Online</h1>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>
                     <label>Nombre y apellidos:</label>

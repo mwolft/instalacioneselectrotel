@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { FaMapMarkerAlt } from "react-icons/fa";
+
 
 const servicios = [
   {
@@ -62,7 +64,10 @@ const ServicioBlock = ({ servicio, index }) => {
 export const Servicios = () => {
   return (
     <section className="servicios-section">
-      <h1>Soluciones Eléctricas Profesionales en el Puerto de Santa María, Cádiz</h1>
+      <h1>Soluciones Eléctricas Profesionales 
+      <br /> 
+      <FaMapMarkerAlt style={{ color: "#FF0000", margin: "0 6px", transform: "translateY(-2px)" }} />
+      <span style={{fontSize: "18px"}}>El Puerto de Santa María, Cádiz</span></h1>
       {servicios.map((servicio, i) => (
         <ServicioBlock key={i} servicio={servicio} index={i} />
       ))}
