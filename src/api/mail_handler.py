@@ -20,7 +20,7 @@ def send_budget_email(data):
     Código Postal: {data.get('codigoPostal')}
     Mensaje: {data.get('mensaje')}
     """)
-    send_email(msg)
+    return send_email(msg)
 
 def send_contact_email(data):
     msg = EmailMessage()
@@ -35,9 +35,14 @@ def send_contact_email(data):
     Teléfono: {data.get('telefono')}
     Mensaje: {data.get('mensaje')}
     """)
-    send_email(msg)
+    return send_email(msg)
 
 def send_email(msg):
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(EMAIL_USER, EMAIL_PASS)
-        smtp.send_message(msg)
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(EMAIL_USER, EMAIL_PASS)
+            smtp.send_message(msg)
+        return True
+    except Exception as e:
+        print("❌ Error al enviar correo:", e)
+        return False
