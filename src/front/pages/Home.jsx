@@ -6,6 +6,8 @@ import banner from "../assets/img/banner.png";
 import { FaPhoneAlt, FaFileAlt } from "react-icons/fa";
 import { Servicios } from "../pages/Servicios.jsx";
 import { ContactoHome } from "../components/ContactoHome.jsx"
+import { WhatsAppWidget } from "../components/WhatsAppWidget.jsx";
+
 
 export const Home = () => {
 	const { store, dispatch } = useGlobalReducer();
@@ -63,6 +65,9 @@ export const Home = () => {
 			<Servicios />
 
 			<ContactoHome />
+
+			<WhatsAppWidget />
+
 		</>
 	);
 };

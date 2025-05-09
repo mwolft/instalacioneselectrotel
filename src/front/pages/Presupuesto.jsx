@@ -54,7 +54,7 @@ export const Presupuesto = () => {
 
             if (!response.ok) throw new Error("Error al enviar el formulario.");
 
-            setSuccess("¡Presupuesto enviado correctamente!");
+            setSuccess("¡Solicitud de presupuesto enviada correctamente!");
             setForm({ nombre: "", email: "", telefono: "", codigoPostal: "", mensaje: "", imagenes: [] });
         } catch (err) {
             setError("Hubo un problema al enviar el formulario.");
