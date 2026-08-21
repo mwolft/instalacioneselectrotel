@@ -3,6 +3,10 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.mail_handler import send_budget_email, send_contact_email
+from api.csv import get_csv_data
+import asyncio
+import traceback
+import os
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -10,6 +14,20 @@ CORS(api)
 @api.route('/hello', methods=['GET'])
 def handle_hello():
     return jsonify({ "message": "Hello from backend" }), 200
+
+@api.route('/csv', methods=['GET'])
+def get_csv():
+    try:
+        # Ejecutar la función asincrónica desde un contexto síncrono
+        data = asyncio.run(get_csv_data())
+        return jsonify(data), 200
+    except Exception as e:
+        print("Error en /csv:", e)
+        tb = traceback.format_exc()
+        # En desarrollo, devolver el detalle del error para debugging
+        if os.getenv('FLASK_DEBUG', '0') == '1' or os.getenv('ENV') == 'development':
+            return jsonify({ "error": "Ocurrió un error interno.", "detail": str(e), "trace": tb}), 500
+        return jsonify({ "error": "Ocurrió un error interno." }), 500
 
 @api.route('/send-budget-request', methods=['POST'])
 def send_budget():

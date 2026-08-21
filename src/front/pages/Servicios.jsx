@@ -1,75 +1,137 @@
-import { useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { useServiceAnimationAdvanced } from "../hooks/useServiceAnimationAdvanced";
+import imagen1 from "../assets/img/1.png";
+import imagen2 from "../assets/img/2.png";
+import imagen3 from "../assets/img/3.png";
+import imagen4 from "../assets/img/4.png";
+import imagen5 from "../assets/img/5.png";
+import { useGlobalState } from "../hooks/useGlobalReducer";
 
-
-const servicios = [
+{/* const servicios = [
   {
     titulo: "Instalaciones y Renovaciones Eléctricas",
     descripcion: "Obras en viviendas, locales comerciales y comunidades (nuevas acometidas, reformas integrales y actualizaciones).",
-    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979040/instalacion-electrica_gtisl4.avif",
+    imagen: imagen1,
   },
   {
     titulo: "Cuadros, Boletines y Certificaciones",
     descripcion: "Cambio o renovación de cuadros eléctricos, emisión de boletines y certificados oficiales para legalización.",
-    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979040/instalaciones-electricas_ryeecl.avif",
+    imagen: imagen2,
   },
   {
     titulo: "Iluminación y Domótica",
     descripcion: "Proyectos LED de interior y exterior, así como sistemas inteligentes de automatización del hogar.",
-    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979040/domotica_vwvugf.avif",
+    imagen: imagen3,
   },
   {
     titulo: "Control de Acceso y Seguridad",
     descripcion: "Instalación de porteros automáticos, videoporteros y soluciones integrales de accesos.",
-    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979041/videoportero_oeamz4.avif",
+    imagen: imagen4,
   },
   {
     titulo: "Movilidad Eléctrica y Servicios para Comunidades",
     descripcion: "Puntos de carga para vehículos eléctricos y mantenimiento eléctrico especializado para comunidades de vecinos.",
-    imagen: "https://res.cloudinary.com/dewanllxn/image/upload/v1745979041/punto-de-carga-para-vehiculos-electrico_zay53o.avif",
+    imagen: imagen5,
   },
-];
+]; */}
 
-const ServicioBlock = ({ servicio, index }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
-  useEffect(() => {
-    if (inView) {
-      controls.start({ opacity: 1, x: 0 });
-    }
-  }, [inView]);
-
-  const isEven = index % 2 === 0;
+const ServicioBlock = ({ slide, index, isEven, currentIndex }) => {
+  const isCurrentBlock = index === currentIndex;
 
   return (
-    <motion.div
-      ref={ref}
+    <div
       className={`servicio-block ${isEven ? 'normal' : 'reverse'}`}
-      initial={{ opacity: 0, x: isEven ? -100 : 100 }}
-      animate={controls}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      style={{
+        opacity: isCurrentBlock ? 1 : 0,
+        pointerEvents: isCurrentBlock ? 'auto' : 'none',
+        transition: 'opacity 0.6s ease',
+      }}
     >
-      <img src={servicio.imagen} alt={servicio.titulo} className="servicio-img" />
+      <img src={slide.urlImg} alt={slide.nombre} className="servicio-img" />
       <div className="servicio-texto">
-        <h2>{servicio.titulo}</h2>
-        <p>{servicio.descripcion}</p>
+        <h2>{slide.nombre}</h2>
+        <p>{slide.descripcion}</p>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 export const Servicios = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slides, setSlides] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { state, dispatch } = useGlobalState();
+
+  const sectionRef = useRef(null);
+
+  const handleNavigate = useCallback((direction) => {
+    if (direction === 'next') {
+      setCurrentIndex((prev) => Math.min(prev + 1, slides.length - 1));
+    } else if (direction === 'prev') {
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    }
+  }, [slides.length]);
+
+  // Hook que controla scroll + rueda para navegar slides
+  useServiceAnimationAdvanced(sectionRef, currentIndex, slides.length, handleNavigate);
+
+  useEffect(() => {
+    // Si ya se hizo fetch de Servicios, usar datos del estado global
+    if (state.fetched.servicios) {
+      setSlides(state.data.servicios);
+      return;
+    }
+
+    const ac = new AbortController();
+
+    const load = async () => {
+      setLoading(true);
+      dispatch({ type: 'FETCH_START' });
+      try {
+        const API_BASE = import.meta.env?.VITE_API_URL || 'http://localhost:3000';
+        const res = await fetch(`${API_BASE}/api/csv`, { signal: ac.signal });
+
+        if (!res.ok) throw new Error('Error en la carga');
+
+        const csvData = await res.json();
+
+        // Accedemos a la clave exacta del JSON (con espacios y tildes)
+        const serviciosData = csvData["Servicios"] || [];
+
+        const mapped = serviciosData.map((item) => ({
+          descripcion: item["DESCRIPCION"] || '',
+          nombre: item["NOMBRE"] || '',
+          urlImg: item["URL Foto"] || ''
+        }));
+
+        setSlides(mapped);
+        dispatch({ type: 'FETCH_SUCCESS', payload: { type: 'servicios', data: mapped } });
+
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Error fetching:', error);
+          dispatch({ type: 'FETCH_ERROR', payload: error.message });
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
+    return () => ac.abort();
+  }, [state.fetched.servicios, dispatch]);
+
   return (
-    <section className="servicios-section">
-      <h1>Soluciones Eléctricas Profesionales 
-      <br /> 
-      <FaMapMarkerAlt style={{ color: "#FF0000", margin: "0 6px", transform: "translateY(-2px)" }} />
-      <span style={{fontSize: "18px"}}>El Puerto de Santa María, Cádiz</span></h1>
-      {servicios.map((servicio, i) => (
-        <ServicioBlock key={i} servicio={servicio} index={i} />
+    <section ref={sectionRef} className="servicios-section">
+      {slides.map((slide, i) => (
+        <ServicioBlock
+          key={i}
+          slide={slide}
+          index={i}
+          isEven={i % 2 === 0}
+          currentIndex={currentIndex}
+        />
       ))}
     </section>
   );

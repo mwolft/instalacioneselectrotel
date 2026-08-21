@@ -1,0 +1,57 @@
+/* Esquinas decorativas opuestas - Botón 1 */
+.esquinas-opuestas-1 {
+  position: relative;
+}
+
+/* Esquina Superior Derecha */
+.esquinas-opuestas-1::before {
+  content: "";
+  position: absolute;
+  top: -0px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  border-top: 4px solid #141414;
+  border-right: 4px solid #141414;
+}
+
+/* Esquina Inferior Izquierda */
+.esquinas-opuestas-1::after {
+  content: "";
+  position: absolute;
+  bottom: -25px;
+  left: -12px;
+  width: 40px;
+  height: 40px;
+  border-bottom: 4px solid #141414;
+  border-left: 4px solid #141414;
+}
+
+/* Esquinas decorativas opuestas - Botón 2 */
+.esquinas-opuestas-2 {
+  position: relative;
+}
+
+/* Esquina Superior Derecha */
+.esquinas-opuestas-2::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  border-top: 4px solid #2563eb;
+  border-right: 4px solid #2563eb;
+}
+
+/* Esquina Inferior Izquierda */
+.esquinas-opuestas-2::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: -15px;
+  width: 40px;
+  height: 40px;
+  border-bottom: 4px solid #2563eb;
+  border-left: 4px solid #2563eb;
+}

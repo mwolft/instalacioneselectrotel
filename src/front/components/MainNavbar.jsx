@@ -1,45 +1,53 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import logo from "../assets/img/electricista-1.png";
 
 export const MainNavbar = () => {
-  const [expanded, setExpanded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleToggle = () => setExpanded(prev => !prev);
-  const handleClose = () => setExpanded(false);
+  const navBaseStyle = {
+    textShadow: '0 0 2px rgba(0,0,0,0.4)',
+  };
+
+  const navStyle = isOpen
+    ? { ...navBaseStyle, mixBlendMode: 'normal', color: 'black', backgroundColor: 'rgba(255, 255, 255, 0.95)' }
+    : { ...navBaseStyle, mixBlendMode: 'difference', color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.01)' };
+
+  const logoStyle = isOpen
+    ? { mixBlendMode: 'normal', filter: 'none' }
+    : { mixBlendMode: 'difference', filter: 'invert(1)' };
 
   return (
     <>
-      <div className="topbar bg-light border-bottom py-1">
-        <Container fluid className="topbar-container d-flex flex-wrap justify-content-end align-items-center small">
-          <a href="tel:+34614483128" className="contact-link d-flex align-items-center me-3">
-            <FaPhoneAlt className="me-1" />
-            <span style={{ fontSize: "0.85rem" }}>614 48 31 28</span>
-          </a>
-          <a href="mailto:instalacioneselectrotel@gmail.com" className="contact-link d-flex align-items-center mx-1">
-            <FaEnvelope className="me-1" />
-            <span style={{ fontSize: "0.8rem" }}>instalacioneselectrotel@gmail.com</span>
-          </a>
-        </Container>
-      </div>
+      <nav className="fixed top-0 left-0 w-full flex items-center justify-between p-6 z-60" style={navStyle}>
+        <a className="nav-logo" href="/">
+          <img src={logo} alt="Logo Electrocel" className="h-8" style={logoStyle} />
+        </a>
 
-      <Navbar expand="lg" className="bg-body-tertiary" expanded={expanded}>
-        <Container fluid>
-          <Navbar.Brand href="/">
-            <img src="https://res.cloudinary.com/dewanllxn/image/upload/v1745979040/electricista_twxzcz.avif" alt="electricista cerca de ti" className="navbar-logo" />
-          </Navbar.Brand>
-          <Navbar.Toggle onClick={handleToggle} aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="/" className="nav-link-custom" onClick={handleClose}>Home</Nav.Link>
-              <Nav.Link href="#contacto" className="nav-link-custom" onClick={handleClose}>Contacto</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        <ul
+          className={`gap-8 left-0 md:bg-transparent md:static md:flex md:flex-row md:items-center md:gap-8 md:w-auto md:ml-auto transition-all duration-200 z-20 ${isOpen ? "flex flex-col absolute top-full w-full bg-white/95 p-4" : "hidden md:flex"
+            }`}
+          style={isOpen ? { mixBlendMode: 'normal', filter: 'none' } : { mixBlendMode: 'inherit' }}
+        >
+          <li>
+            <a href="/servicios" className="inline-block px-2 py-1">Servicios</a>
+          </li>
+          <li>
+            <a href="/presupuesto" className="inline-block px-2 py-1">Presupuesto</a>
+          </li>
+          <li>
+            <a href="#contacto" className="inline-block px-2 py-1">Contacto</a>
+          </li>
+        </ul>
+
+        <button
+          className="block md:hidden text-2xl"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Abrir menú"
+        >
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </nav>
     </>
   );
 };

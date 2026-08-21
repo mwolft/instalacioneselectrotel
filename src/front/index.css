@@ -1,3 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ultra&display=swap");
+@import "tailwindcss";
+
 html,
 body,
 #root {
@@ -23,6 +27,7 @@ body,
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
 .layout-content {
@@ -33,6 +38,11 @@ body,
   width: 250px;
   height: auto;
   margin-left: 30px;
+}
+
+/* Clase para usar la fuente Google "Ultra" en títulos */
+.font-ultra {
+  font-family: "Ultra", serif;
 }
 .contact-link {
   color: #033476;
@@ -132,21 +142,27 @@ body,
   background-color: #f0f0f0;
 }
 .servicios-section {
-  display: flex;
-  flex-direction: column;
-  gap: 80px;
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+  width: 100%;
+  height: 100vh;
   padding: 0 20px;
   margin-bottom: 100px;
+  margin-top: 100px;
 }
 .servicios-section h1,
-h2 {
+.servicios-section h2 {
   margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
   text-align: center;
   font-size: 2.4rem;
   color: #033476;
   margin-bottom: 40px;
   font-weight: 600;
   position: relative;
+  line-height: 1.2;
 }
 
 .servicios-section h1::after {
@@ -160,39 +176,64 @@ h2 {
 }
 
 .servicio-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #f9f9f9;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
+  overflow: hidden;
+  transition: opacity 0.6s ease;
 }
 
 .servicio-block.reverse {
   flex-direction: row-reverse;
 }
 
+.servicio-block.visible {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.servicio-block.hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .servicio-img {
-  width: 250px;
-  height: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  max-height: 580px;
+  flex-shrink: 0;
+  will-change: clip-path;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .servicio-texto {
   max-width: 600px;
+  margin-left: 20px;
+  position: relative;
+  z-index: 10;
+  will-change: transform, opacity;
 }
 
 .servicio-block.normal .servicio-texto {
-  text-align: left;
+  text-align: left !important;
 }
 
 .servicio-block.reverse .servicio-texto {
-  text-align: right;
+  text-align: left !important;
 }
 
 .servicio-texto h2 {
-  font-size: 1.8rem;
+  text-align: left !important;
+  font-size: 2rem;
   color: #033476;
   margin-bottom: 10px;
 }
@@ -201,6 +242,9 @@ h2 {
   font-size: 1rem;
   color: #333;
   line-height: 1.5;
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: 520px;
 }
 
 /* Responsive: en móviles todo centrado */
@@ -209,6 +253,8 @@ h2 {
   .servicio-block.reverse {
     flex-direction: column !important;
     text-align: center;
+    height: 100svh;
+    gap: 2rem
   }
 
   .servicio-texto {
@@ -225,7 +271,7 @@ h2 {
 }
 
 .presupuesto-container h1,
-h2 {
+.presupuesto-container h2 {
   text-align: center;
   color: #033476;
   margin-bottom: 30px;
@@ -288,13 +334,12 @@ h2 {
 }
 .contacto-home {
   background: #f9f9f9;
-  padding: 50px 20px;
   text-align: center;
 }
 
 .contacto-form {
-  max-width: 600px;
   margin: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -303,7 +348,7 @@ h2 {
 .contacto-form input,
 .contacto-form textarea {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid hsl(0, 0%, 80%);
   border-radius: 6px;
   font-size: 16px;
 }
@@ -336,6 +381,10 @@ h2 {
   color: green;
 }
 
+.fotoContacto {
+  clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 0% 100%);
+}
+
 @media (max-width: 576px) {
   .banner-buttons {
     flex-direction: column;
@@ -351,76 +400,18 @@ h2 {
   }
 }
 /* Base styles for the container */
+/* WhatsApp Widget - Main Container */
 .whatsapp-widget {
   position: fixed;
-  bottom: 20px; /* Adjust as needed */
-  right: 20px; /* Adjust as needed */
-  z-index: 1000; /* Ensure it's on top */
-  transition: all 0.3s ease-in-out; /* Smooth transition for states */
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  width: 60px;
+  height: 60px;
 }
 
 /* Collapsed state */
-.whatsapp-widget.collapsed .whatsapp-icon {
-  display: flex; /* To center the icon */
-  justify-content: center;
-  align-items: center;
-  width: 60px; /* Size of the icon button */
-  height: 60px;
-  background-color: white;
-  color: #25d366; /* WhatsApp green */
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
-  cursor: pointer;
-  position: relative; /* Needed for the badge */
-  padding: 0; /* Remove default button padding */
-}
-
-/* Collapsed state: Hide the expanded box */
-.whatsapp-widget.collapsed .whatsapp-box {
-  display: none;
-}
-
-/* Badge for the collapsed icon */
-.whatsapp-widget.collapsed .whatsapp-icon::after {
-  content: "";
-  position: absolute;
-  top: 0; /* Adjust positioning */
-  right: 0; /* Adjust positioning */
-  width: 12px; /* Size of the badge */
-  height: 12px;
-  background-color: #ff4d4f; /* Red color for badge */
-  border-radius: 50%;
-  border: 2px solid white; /* Small white border around badge */
-}
-
-.whatsapp-widget.expanded .whatsapp-icon {
-  display: none;
-}
-
-.whatsapp-widget.expanded .whatsapp-box {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  max-width: 90vw;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  transform: translateY(-70px) translateX(0);
-  bottom: calc(60px + 20px + 10px);
-  right: 0;
-}
-.whatsapp-widget {
-  position: fixed;
-  bottom: 20px; /* Distance from viewport bottom */
-  right: 20px; /* Distance from viewport right */
-  z-index: 1000;
-}
-
 .whatsapp-widget.collapsed {
   width: 60px;
   height: 60px;
@@ -458,9 +449,8 @@ h2 {
   display: none;
 }
 
+/* Expanded state */
 .whatsapp-widget.expanded {
-  bottom: 20px;
-  right: 20px;
   width: 300px;
   max-width: 90vw;
   height: auto;
@@ -479,10 +469,6 @@ h2 {
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin-bottom: 10px;
 }
 
 .whatsapp-header {
@@ -508,15 +494,15 @@ h2 {
 }
 
 .whatsapp-user div strong {
-  display: block; 
+  display: block;
   font-size: 1rem;
   font-weight: bold;
 }
 
 .whatsapp-user div p {
-  margin: 0; 
+  margin: 0;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.8); 
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .close-btn {
@@ -529,32 +515,32 @@ h2 {
 }
 
 .whatsapp-body {
-  background-color: #e5ddd5; 
+  background-color: #e5ddd5;
   padding: 15px;
 }
 
 .message {
   background-color: white;
-  border-radius: 8px; 
-  padding: 10px 12px; 
-  max-width: 80%; 
-  margin-bottom: 10px; 
-  position: relative; 
+  border-radius: 8px;
+  padding: 10px 12px;
+  max-width: 80%;
+  margin-bottom: 10px;
+  position: relative;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
 .message p {
-  margin: 0; 
+  margin: 0;
   line-height: 1.4;
 }
 
 .message span.time {
-  display: block; 
+  display: block;
   font-size: 0.7rem;
-  color: #888; 
-  text-align: right; 
-  margin-top: 5px; 
+  color: #888;
+  text-align: right;
+  margin-top: 5px;
   position: absolute;
   bottom: 5px;
   right: 10px;
@@ -614,30 +600,29 @@ h2 {
   box-sizing: border-box;
 }
 
-
 .footer {
-	border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
 }
 
 .footer-content {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-social {
-	display: flex;
-	gap: 15px;
-	font-size: 1.4rem;
-	margin-top: 8px;
+  display: flex;
+  gap: 15px;
+  font-size: 1.4rem;
+  margin-top: 8px;
 }
 
 .footer-social a {
-	color: #033476;
-	transition: color 0.3s;
+  color: #033476;
+  transition: color 0.3s;
 }
 
 .footer-social a:hover {
-	color: #02224b;
+  color: #02224b;
 }

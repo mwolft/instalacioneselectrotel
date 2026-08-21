@@ -1,7 +1,7 @@
 import { FaWhatsapp, FaInstagram, FaFacebook } from "react-icons/fa";
 
 export const Footer = () => (
-	<footer className="footer bg-light text-center py-5">
+	<footer className="footer bg-light text-center py-5 z-50 relative">
 		<div className="footer-content">
 			<p className="mb-2" style={{ color: '#144b54' }}>© 2025 Instalaciones Electrotel. Todos los derechos reservados.</p>
 			<div className="footer-social">

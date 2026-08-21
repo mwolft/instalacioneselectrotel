@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { FaWhatsapp, FaTimes } from "react-icons/fa";
 
-export const WhatsAppWidget  = () => {
- const [visible, setVisible] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+export const WhatsAppWidget = () => {
+  const [visible, setVisible] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 5000);
@@ -12,7 +13,7 @@ export const WhatsAppWidget  = () => {
 
   if (!visible) return null;
 
-  return (
+  const widgetContent = (
     <div className={`whatsapp-widget ${collapsed ? "collapsed" : "expanded"}`}>
       {collapsed ? (
         <button className="whatsapp-icon" onClick={() => setCollapsed(false)}>
@@ -51,4 +52,6 @@ export const WhatsAppWidget  = () => {
       )}
     </div>
   );
+
+  return createPortal(widgetContent, document.body);
 };

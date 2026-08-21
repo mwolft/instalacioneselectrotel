@@ -29,15 +29,20 @@
   ],
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
     "@types/react": "^18.2.18",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.4",
+    "autoprefixer": "^10.4.23",
     "eslint": "^8.46.0",
     "eslint-plugin-react": "^7.33.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "vite": "^4.4.8",
-    "react-snap": "^1.24.0"
+    "postcss": "^8.5.6",
+    "react-snap": "^1.23.0",
+    "rollup": "^4.57.1",
+    "tailwindcss": "^4.1.18",
+    "vite": "^5.4.21"
   },
   "babel": {
     "presets": [
@@ -56,7 +61,11 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.5",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.7.4",
+    "gsap": "^3.14.2",
+    "polished": "^4.3.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.9",
@@ -64,7 +73,8 @@
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.16.0",
-    "react-router-dom": "^6.18.0"
+    "react-router-dom": "^6.18.0",
+    "swiper": "^10.0.4"
   },
   "reactSnap": {
     "inlineCss": true,

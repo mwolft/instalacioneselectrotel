@@ -1,24 +1,63 @@
-// Import necessary hooks and functions from React.
-import { useContext, useReducer, createContext } from "react";
-import storeReducer, { initialStore } from "../store"  // Import the reducer and the initial state.
+import React, { createContext, useReducer, useContext } from 'react';
 
-// Create a context to hold the global state of the application
-// We will call this global state the "store" to avoid confusion while using local states
-const StoreContext = createContext()
+const GlobalContext = createContext();
 
-// Define a provider component that encapsulates the store and warps it in a context provider to 
-// broadcast the information throught all the app pages and components.
-export function StoreProvider({ children }) {
-    // Initialize reducer with the initial state.
-    const [store, dispatch] = useReducer(storeReducer, initialStore())
-    // Provide the store and dispatch method to all child components.
-    return <StoreContext.Provider value={{ store, dispatch }}>
-        {children}
-    </StoreContext.Provider>
+export const GlobalProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        <GlobalContext.Provider value={{ state, dispatch }}>
+            {children}
+        </GlobalContext.Provider>
+    );
+};
+
+export const useGlobalState = () => useContext(GlobalContext);
+
+
+const initialState = {
+    data: {
+        casosExito: [],
+        servicios: []
+    },
+    loading: false,
+    error: null,
+    fetched: {
+        casosExito: false,
+        servicios: false
+    }
+};
+
+export function reducer(state, action) {
+    switch (action.type) {
+        case 'FETCH_START':
+            return { ...state, loading: true, error: null };
+        case 'FETCH_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                data: {
+                    ...state.data,
+                    [action.payload.type]: action.payload.data
+                },
+                fetched: {
+                    ...state.fetched,
+                    [action.payload.type]: true
+                }
+            };
+        case 'FETCH_ERROR':
+            return { ...state, loading: false, error: action.payload };
+        default:
+            return state;
+    }
 }
 
-// Custom hook to access the global state and dispatch function.
+// Default hook export for existing code that imports the hook as default
 export default function useGlobalReducer() {
-    const { dispatch, store } = useContext(StoreContext)
-    return { dispatch, store };
+    const context = useContext(GlobalContext);
+    if (!context) {
+        throw new Error('useGlobalReducer must be used within a GlobalProvider');
+    }
+    return { store: context.state, dispatch: context.dispatch };
 }
+

@@ -7,7 +7,7 @@ def setup_admin(app):
     # Configuración de Flask-Admin
     app.secret_key = os.environ.get('FLASK_APP_KEY', 'sample key')
     app.config['FLASK_ADMIN_SWATCH'] = 'superhero'
-    admin = Admin(app, name='Electrotel', template_mode='bootstrap3')
+    admin = Admin(app, name='Electrotel')
     admin.add_view(ModelView(User, db.session, category="Usuarios"))
     admin.add_view(ModelView(Professional, db.session, category="Usuarios"))
     admin.add_view(ModelView(Service, db.session, category="Catálogo"))
