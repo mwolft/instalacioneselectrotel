@@ -7,7 +7,7 @@ import { ContactoHome } from "../components/ContactoHome.jsx"
 import AboutMe from "../components/AboutMe.jsx";
 import Hero from "../components/Hero.jsx";
 import Carousel from "../components/Carousel.jsx";
-import CasosExito from "../components/CasosExito.jsx";
+import CasosExito from "../components/casosExito.jsx";
 import wallboxAc from '../assets/img/wallbox-ac.png';
 
 
