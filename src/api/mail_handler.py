@@ -11,6 +11,7 @@ def send_budget_email(data, files):
     msg['Subject'] = 'Nueva solicitud de presupuesto'
     msg['From'] = EMAIL_USER
     msg['To'] = EMAIL_TO
+    msg['Reply-To'] = data.get('email')
 
     msg.set_content(f"""
     🧾 PRESUPUESTO SOLICITADO
@@ -40,6 +41,7 @@ def send_contact_email(data):
     msg['Subject'] = 'Nuevo mensaje desde el formulario de contacto'
     msg['From'] = EMAIL_USER
     msg['To'] = EMAIL_TO
+    msg['Reply-To'] = data.get('email')
     msg.set_content(f"""
     📩 NUEVO CONTACTO
 

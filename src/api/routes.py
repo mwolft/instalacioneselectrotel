@@ -7,9 +7,15 @@ from api.csv import get_csv_data
 import asyncio
 import traceback
 import os
+import re
 
 api = Blueprint('api', __name__)
 CORS(api)
+
+EMAIL_PATTERN = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+
+def is_valid_email(email):
+    return isinstance(email, str) and bool(EMAIL_PATTERN.fullmatch(email))
 
 @api.route('/hello', methods=['GET'])
 def handle_hello():
@@ -33,6 +39,8 @@ def get_csv():
 def send_budget():
     form_data = request.form
     files = request.files
+    if not is_valid_email(form_data.get('email')):
+        return jsonify({ "message": "El email es obligatorio y debe tener un formato válido." }), 400
     try:
         success = send_budget_email(form_data, files)
         if success:
@@ -47,6 +55,8 @@ def send_budget():
 def contact():
     try:
         data = request.get_json()
+        if not isinstance(data, dict) or not is_valid_email(data.get('email')):
+            return jsonify({ "message": "El email es obligatorio y debe tener un formato válido." }), 400
         success = send_contact_email(data)
         if success:
             return jsonify({ "message": "Mensaje enviado con éxito" }), 200
